@@ -1,3 +1,5 @@
+@import 'variables';
+
 .form-box {
     padding: 140px 0 123px;
     display: flex;
@@ -10,13 +12,7 @@
 }
 
 .form-content-title {
-    @include text-700;
     font-size: 48px;
-
-    span {
-        color: $accent_color;
-        font-family: inherit;
-    }
 }
 
 .form {

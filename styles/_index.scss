@@ -15,14 +15,8 @@
     max-width: 588px;
 }
 
-.main-content-title {
-    @include text-700;
+.main-content-title {    
     font-size: 54px;
-
-    span {
-        color: $accent_color;
-        font-family: inherit;
-    }
 }
 
 .main-content-text {

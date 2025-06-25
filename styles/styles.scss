@@ -19,6 +19,14 @@ a {
     max-width: 1200px;
     margin: 0 auto;
 }
+.title {
+    @include text-700;
+    
+    span {
+        color: $accent_color;
+        font-family: inherit;
+    }
+}
 
 .btn {
     text-align: center;
@@ -49,3 +57,5 @@ a {
 @import 'index';
 @import 'form';
 @import 'choice';
+@import 'test';
+@import 'result';
