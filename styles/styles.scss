@@ -8,6 +8,7 @@
 
 a {
     color: $accent_color;
+    text-decoration: none;
 }
 
 .header {
@@ -38,11 +39,20 @@ a {
     border: 1px solid transparent;
     cursor: pointer;
     transition: .1s;
+    padding: 12px;
 
     &:hover {
         transform: scale(1.05);
     }
+    &:disabled{
+        background-color: $retouch_color;
+        cursor: not-allowed;
+    }
 }
+a.btn{
+    display: inline-block;
+}
+
 
 .footer {
     padding: 40px 0;

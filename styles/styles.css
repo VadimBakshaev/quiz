@@ -19,6 +19,7 @@
 
 a {
   color: #6933DC;
+  text-decoration: none;
 }
 
 .header {
@@ -50,9 +51,18 @@ a {
   border: 1px solid transparent;
   cursor: pointer;
   transition: 0.1s;
+  padding: 12px;
 }
 .btn:hover {
   transform: scale(1.05);
+}
+.btn:disabled {
+  background-color: #DCDCF3;
+  cursor: not-allowed;
+}
+
+a.btn {
+  display: inline-block;
 }
 
 .footer {
