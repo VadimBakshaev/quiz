@@ -38,7 +38,8 @@
                 that.validateForm();
             });
             this.formElement = document.querySelector('.form');
-            this.formElement.addEventListener('submit', function () {
+            this.formElement.addEventListener('submit', function (e) {
+                e.preventDefault();
                 that.processForm();
             });
             this.processElement = document.querySelector('.form-btn');
@@ -69,8 +70,7 @@
                     paramString += `${(paramString ? '&' : '?')}${item.name}=${item.element.value}`
                 });
 
-                location.href = 'https://dzen.ru';
-                //document.location.assign('https://www.cyberforum.ru/javascript/thread310584.html') //+ paramString;
+                location.href = './choice.html' + paramString;
             }
         }
     };
