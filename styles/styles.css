@@ -426,6 +426,12 @@ a.btn {
   border-color: #6933DC;
   color: #6933DC;
 }
+.test-actions-prev:disabled,
+.test-actions-next:disabled {
+  background-color: transparent;
+  border-color: #DCDCF3;
+  color: #DCDCF3;
+}
 
 .test-action-skip {
   text-decoration: none;

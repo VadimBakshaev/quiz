@@ -147,6 +147,11 @@
     background-color: transparent;
     border-color: $accent_color;
     color: $accent_color;
+    &:disabled{
+        background-color: transparent;
+        border-color: $retouch_color;
+        color: $retouch_color;
+    }
 }
 
 .test-action-skip {
