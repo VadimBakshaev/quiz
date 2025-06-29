@@ -299,8 +299,6 @@ a.btn {
   margin-top: 60px;
   margin-bottom: 80px;
   display: flex;
-  width: 810px;
-  justify-content: space-between;
 }
 
 .progress-bar-item-circle {
@@ -315,6 +313,7 @@ a.btn {
   flex-direction: column;
   align-items: center;
   position: relative;
+  margin-right: 130px;
 }
 .progress-bar-item:not(:last-child)::before {
   content: "";
@@ -337,7 +336,7 @@ a.btn {
   border-radius: 50%;
   z-index: 1;
   background-color: #DCDCF3;
-  left: 22px;
+  left: calc(50% - 7px);
   top: 6px;
 }
 
