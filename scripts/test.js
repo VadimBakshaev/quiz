@@ -8,15 +8,15 @@
         progressBar: null,
         prevBtnEl: null,
         nextBtnEl: null,
+        skipEl: null,
         currentQuestionIndex: 1,
         userResult: [],
         init() {
             checkUserData();
-            const url = new URL(location.href);
-            const testId = url.searchParams.get('id');
-            if (testId) {
+            const user = JSON.parse(sessionStorage.getItem('user'));
+            if (user.id) {
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', 'https://testologia.ru/get-quiz?id=' + testId, false);
+                xhr.open('GET', 'https://testologia.ru/get-quiz?id=' + user.id, false);
                 xhr.send();
                 if (xhr.status === 200 && xhr.responseText) {
                     try {
@@ -29,14 +29,15 @@
                     console.log(xhr.status);
                 }
             } else {
-                console.log(testId);
+                console.log(user.id);
             }
         },
-        startQuiz() {            
+        startQuiz() {
             document.querySelector('.test-pre-title').innerText = this.quiz.name;
             this.progressBar = document.querySelector('.test-progress-bar');
             this.titleEl = document.querySelector('.test-question');
             this.optionsEl = document.querySelector('.test-question-options');
+            this.skipEl = document.querySelector('.test-action-skip');
             this.prevBtnEl = document.querySelector('.test-actions-prev');
             this.prevBtnEl.addEventListener('click', () => {
                 this.move('prev');
@@ -53,14 +54,14 @@
 
             const timer = document.querySelector('.test-actions-time-clock');
             let seconds = 59;
-            const interval = setInterval(function () {
-                timer.innerText = seconds;
-                seconds--;
-                if (seconds === 0) {
-                    clearInterval(interval);
-                    this.complete();
-                };
-            }.bind(this), 1000)
+            // const interval = setInterval(function () {
+            //     timer.innerText = seconds;
+            //     seconds--;
+            //     if (seconds === 0) {
+            //         clearInterval(interval);
+            //         this.complete();
+            //     };
+            // }.bind(this), 1000)
         },
         prepareProgressBar() {
             for (let i = 0; i < this.quiz.questions.length; i++) {
@@ -85,7 +86,6 @@
             const choosenOption = this.userResult.find(el => {
                 return el.questionId === activeQuestion.id
             });
-            
             this.titleEl.innerHTML = `<span>Вопрос ${this.currentQuestionIndex}:</span> ${activeQuestion.question}`;
             this.optionsEl.innerHTML = '';
             activeQuestion.answers.forEach(answer => {
@@ -98,8 +98,9 @@
                 inputEl.setAttribute('type', 'radio');
                 inputEl.setAttribute('name', 'answer');
                 inputEl.setAttribute('value', answer.id);
-                if (choosenOption && choosenOption.choosenAnswerId === answer.id) {
+                if (choosenOption && choosenOption.chosenAnswerId === answer.id) {
                     inputEl.setAttribute('checked', 'checked');
+                    that.skipEl.classList.add('disabled');
                 };
                 inputEl.addEventListener('change', function () {
                     that.chooseAnswer();
@@ -111,15 +112,17 @@
 
                 optionEl.appendChild(inputEl);
                 optionEl.appendChild(labelEl);
-                this.optionsEl.appendChild(optionEl);
+                that.optionsEl.appendChild(optionEl);
             });
-            if (choosenOption && choosenOption.choosenAnswerId) {
+            if (choosenOption && choosenOption.chosenAnswerId) {
                 this.nextBtnEl.removeAttribute('disabled');
             } else {
                 this.nextBtnEl.setAttribute('disabled', 'disabled');
+                this.skipEl.classList.remove('disabled');
             };
             if (this.currentQuestionIndex === this.quiz.questions.length) {
                 this.nextBtnEl.innerText = 'Завершить';
+                this.skipEl.classList.add('disabled');
             } else {
                 this.nextBtnEl.innerText = 'Дальше';
             };
@@ -131,26 +134,27 @@
         },
         chooseAnswer() {
             this.nextBtnEl.removeAttribute('disabled');
+            this.skipEl.classList.add('disabled');
         },
         move(action) {
-            const chosenAnswer = Array.from(document.querySelectorAll('.option-answer')).find(el => {
+            const choosenAnswer = Array.from(document.querySelectorAll('.option-answer')).find(el => {
                 return el.checked;
             });
             const activeQuestion = this.quiz.questions[this.currentQuestionIndex - 1];
-            let chosenAnswerId = null;
-            if (chosenAnswer && chosenAnswer.value) {
-                chosenAnswerId = Number(chosenAnswer.value);
+            let choosenAnswerId = null;
+            if (choosenAnswer && choosenAnswer.value) {
+                choosenAnswerId = Number(choosenAnswer.value);
             };
 
             const existingResult = this.userResult.find(el => {
                 return el.questionId === activeQuestion.id;
             });
             if (existingResult) {
-                existingResult.chosenAnswerId = chosenAnswerId;
+                existingResult.choosenAnswerId = choosenAnswerId;
             } else {
                 this.userResult.push({
                     questionId: activeQuestion.id,
-                    chosenAnswerId: chosenAnswerId
+                    chosenAnswerId: choosenAnswerId
                 });
             };
 
@@ -179,19 +183,14 @@
             this.showQuestion();
         },
         complete() {
-            const url = new URL(location.href);
-            const id = url.searchParams.get('id');
-            const firstName = url.searchParams.get('firstName');
-            const lastName = url.searchParams.get('lastName');
-            const email = url.searchParams.get('email');
-
+            const user = JSON.parse(sessionStorage.getItem('user'));            
             const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'https://testologia.ru/pass-quiz?id=' + id, false);
+            xhr.open('POST', 'https://testologia.ru/pass-quiz?id=' + user.id, false);
             xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-            console.log(this.userResult);
             xhr.send(JSON.stringify({
-                name: firstName, 
-                lastName, email,
+                name: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
                 results: this.userResult
             }));
             if (xhr.status === 200 && xhr.responseText) {
@@ -201,9 +200,11 @@
                 } catch (e) {
                     console.log(e);
                 };
-                if (result) {
-                    location.href = `./result.html?score=${result.score}&total=${result.total}`;
-
+                if (result) {                    
+                    user.score = result.score;
+                    user.total = result.total;
+                    sessionStorage.setItem('user', JSON.stringify(user));
+                    location.href = `./result.html`;                    
                 }
             } else {
                 console.log(xhr.status);

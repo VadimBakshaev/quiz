@@ -154,15 +154,24 @@
     }
 }
 
+.test-action-skip-box {
+    text-align: end;
+}
+
 .test-action-skip {
     text-decoration: none;
     color: $accent_color;
-    display: block;
-    text-align: end;
+    display: inline-block;
     margin-top: 10px;
     font-size: 17px;
 
     &:hover {
         text-decoration: underline;
     }
+}
+
+.disabled {
+    color: $retouch_color;
+    pointer-events: none;
+    cursor: default;
 }

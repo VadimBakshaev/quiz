@@ -1,10 +1,6 @@
-function checkUserData(){
-    const url = new URL(location.href);
-    const firstName = url.searchParams.get('firstName');
-    const lastName = url.searchParams.get('lastName');
-    const email = url.searchParams.get('email');
-
-    if (!firstName || !lastName || !email){
+function checkUserData(){    
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    if (!user.firstName || !user.lastName || !user.email){
         location.href = './index.html';
-    };
+    };    
 }

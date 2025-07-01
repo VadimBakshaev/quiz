@@ -29,3 +29,13 @@
     color: $reverse_accent_color;
     padding: 100px 112px;
 }
+
+.result-answers-link-box {
+    text-align: end;
+}
+
+.result-answers-link {
+    &:hover {
+        text-decoration: underline;
+    }
+}

@@ -65,13 +65,14 @@
         },
         processForm() {
             if (this.validateForm()) {
-                let paramString = '';
+                const user = {};
                 this.fields.forEach(item => {
-                    paramString += `${(paramString ? '&' : '?')}${item.name}=${item.element.value}`
+                    user[item.name] = item.element.value;
                 });
 
-                location.href = './choice.html' + paramString;
-            }
+                sessionStorage.setItem('user', JSON.stringify(user));                
+                location.href = './choice.html';                
+            }            
         }
     };
     Form.init();

@@ -52,7 +52,10 @@
         chooseQuiz(element) {
             const datId = element.getAttribute('data-id');
             if (datId) {
-                location.href = './test.html' + location.search + '&id=' + datId;
+                const user = JSON.parse(sessionStorage.getItem('user'));
+                user.id = datId;
+                sessionStorage.setItem('user', JSON.stringify(user));
+                location.href = './test.html';
             };
         }
 
