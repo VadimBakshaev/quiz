@@ -9,6 +9,10 @@
 a {
     color: $accent_color;
     text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
 .header {
@@ -20,9 +24,10 @@ a {
     max-width: 1200px;
     margin: 0 auto;
 }
+
 .title {
     @include text-700;
-    
+
     span {
         color: $accent_color;
         font-family: inherit;
@@ -44,12 +49,14 @@ a {
     &:hover {
         transform: scale(1.05);
     }
-    &:disabled{
+
+    &:disabled {
         background-color: $retouch_color;
         cursor: not-allowed;
     }
 }
-a.btn{
+
+a.btn {
     display: inline-block;
 }
 
@@ -63,9 +70,3 @@ a.btn{
     font-size: 13px;
     color: $retouch_color;
 }
-
-@import 'index';
-@import 'form';
-@import 'choice';
-@import 'test';
-@import 'result';
