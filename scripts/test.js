@@ -15,19 +15,8 @@
             checkUserData();
             const user = JSON.parse(sessionStorage.getItem('user'));
             if (user.id) {
-                const xhr = new XMLHttpRequest();
-                xhr.open('GET', 'https://testologia.ru/get-quiz?id=' + user.id, false);
-                xhr.send();
-                if (xhr.status === 200 && xhr.responseText) {
-                    try {
-                        this.quiz = JSON.parse(xhr.responseText);
-                    } catch (e) {
-                        console.log(e);
-                    };
-                    this.startQuiz();
-                } else {
-                    console.log(xhr.status);
-                }
+                this.quiz = getRequest('https://testologia.ru/get-quiz?id=' + user.id);
+                this.startQuiz();
             } else {
                 console.log(user.id);
             }
@@ -183,7 +172,7 @@
             this.showQuestion();
         },
         complete() {
-            const user = JSON.parse(sessionStorage.getItem('user'));            
+            const user = JSON.parse(sessionStorage.getItem('user'));
             const xhr = new XMLHttpRequest();
             xhr.open('POST', 'https://testologia.ru/pass-quiz?id=' + user.id, false);
             xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
@@ -200,11 +189,12 @@
                 } catch (e) {
                     console.log(e);
                 };
-                if (result) {                    
+                if (result) {
+                    user.results = this.userResult;
                     user.score = result.score;
                     user.total = result.total;
                     sessionStorage.setItem('user', JSON.stringify(user));
-                    location.href = `./result.html`;                    
+                    location.href = `./result.html`;
                 }
             } else {
                 console.log(xhr.status);
