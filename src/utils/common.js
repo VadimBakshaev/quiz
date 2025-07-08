@@ -9,7 +9,7 @@ function checkUserData() {
  * Function sends a GET request to the specified server, and returns a response
  * @param {string} addr - http server address
  * @returns {object} - returns the response from the server as an object
- */ 
+ */
 function getRequest(addr) {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', addr, false);
@@ -24,3 +24,5 @@ function getRequest(addr) {
         console.log(xhr.status);
     };
 };
+
+export { checkUserData, getRequest };

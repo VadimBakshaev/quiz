@@ -2,24 +2,24 @@
 @font-face {
   font-family: "Museo Sans Cyrl";
   src: local("Museo Sans Cyrl");
-  src: url("../fonts/museosanscyrl-500.ttf");
+  src: url("../static/fonts/museosanscyrl-500.ttf");
 }
 @font-face {
   font-family: "Museo Sans Cyrl Bold";
   src: local("Museo Sans Cyrl");
-  src: url("../fonts/museosanscyrl-700.ttf");
+  src: url("../static/fonts/museosanscyrl-700.ttf");
 }
 /* Colors */
 /* Fonts */
 @font-face {
   font-family: "Museo Sans Cyrl";
   src: local("Museo Sans Cyrl");
-  src: url("../fonts/museosanscyrl-500.ttf");
+  src: url("../static/fonts/museosanscyrl-500.ttf");
 }
 @font-face {
   font-family: "Museo Sans Cyrl Bold";
   src: local("Museo Sans Cyrl");
-  src: url("../fonts/museosanscyrl-700.ttf");
+  src: url("../static/fonts/museosanscyrl-700.ttf");
 }
 /* Colors */
 * {
@@ -92,7 +92,7 @@ a.btn {
 
 .result {
   padding: 140px 0 91px;
-  background-image: url("../images/question_marks.svg");
+  background-image: url("../static/images/question_marks.svg");
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -108,7 +108,7 @@ a.btn {
 }
 
 .result-score {
-  background-image: url("../images/result.svg");
+  background-image: url("../static/images/result.svg");
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
@@ -124,8 +124,4 @@ a.btn {
 
 .result-answers-link-box {
   text-align: end;
-}
-
-.result-answers-link:hover {
-  text-decoration: underline;
 }/*# sourceMappingURL=result.css.map */
